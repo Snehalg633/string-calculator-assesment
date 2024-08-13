@@ -12,3 +12,8 @@ test("returns sum for two numbers separated by comma",()=>{
     expect(add('1,2')).toBe(3);
 })
 
+test("returns sum for multiple numbers separated by comma",()=>{
+    expect(add('1,2,3')).toBe(6);
+})
+
+
