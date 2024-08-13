@@ -1,5 +1,6 @@
 import { add } from "./stringCalculator";
 
+describe('String Calculator',()=>{
 test('returns 0 for empty string',()=>{
     expect(add('')).toBe(0);
 })
@@ -36,3 +37,4 @@ test('throws error for multiple negative numbers', () => {
     expect(() => add('1,-2,-3,4')).toThrow('Negative numbers not allowed: -2, -3');
 });
 
+})
