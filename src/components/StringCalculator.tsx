@@ -1,5 +1,5 @@
 import React from 'react';
-import {add} from "../services/stringCalculatro"
+import {add} from "../services/stringCalculator"
 
 function StringCalculator(props) {
     return (
