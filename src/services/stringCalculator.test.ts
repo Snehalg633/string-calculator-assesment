@@ -16,4 +16,8 @@ test("returns sum for multiple numbers separated by comma",()=>{
     expect(add('1,2,3')).toBe(6);
 })
 
+test("returns sum for numbers separated by newlines",()=>{
+    expect(add('1\n2,3')).toBe(6);
+})
+
 
