@@ -1,17 +1,38 @@
 export function add(numbers: string): number {
-  if (!numbers) return 0;
+  function parseNumbers(str: string, delimiter: string): number[] {
+    return str
+      .split(delimiter)
+      .map((numStr) => Number(numStr))
+      .filter((num) => !isNaN(num));
+  }
 
-  let delimiter = /[\n,]/;
+  function throwNegativeNumberException(negatives: number[]): void {
+    throw new Error(`Negative numbers not allowed: ${negatives.join(", ")}`);
+  }
+
+  let newNumbers: number[];
+
   if (numbers.startsWith("//")) {
-    const newNum = numbers.split("\n", 2);
-    delimiter = new RegExp(newNum[0].slice(2));
-    numbers = newNum[1];
-  }
-  const numArray = numbers.split(delimiter).map(Number);
-  const negatives = numArray.filter(n=>n<0);
-  if(negatives.length){
-    throw new Error(`Negative numbers not allowed: ${negatives.join(", ")}`)
+    const delimiterEndIndex =
+      numbers.indexOf("\n") === -1
+        ? numbers.indexOf("\\n") - 1
+        : numbers.indexOf("\n");
+
+    const delimiter = numbers.substring(2, delimiterEndIndex);
+    const numbersStr = numbers.substring(delimiterEndIndex + 1);
+
+    const normalizedStr = numbersStr.replace(new RegExp(delimiter, "g"), ",");
+
+    newNumbers = parseNumbers(normalizedStr.replace(/\\n/g, "\n"), ",");
+  } else {
+    const normalizedStr = numbers.replace(/\\n/g, "\n");
+    newNumbers = parseNumbers(normalizedStr.replace(/\n/g, ","), ",");
   }
 
-  return numArray.reduce((acc, num) => acc + num, 0);
+  const negatives = newNumbers.filter((num) => num < 0);
+  if (negatives.length > 0) {
+    throwNegativeNumberException(negatives);
+  }
+
+  return newNumbers.reduce((a, b) => a + b, 0);
 }
