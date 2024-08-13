@@ -1,3 +1,4 @@
+import './StringCalculator.css';
 import React, { useState } from "react";
 import { add } from "../services/stringCalculator";
 
